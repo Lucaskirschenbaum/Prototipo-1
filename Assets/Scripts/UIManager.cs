@@ -8,12 +8,14 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI txt_Score;
     public TextMeshProUGUI txt_Time;
 
-    void Start()   
-{
-    UpdateScore(0);
-    UpdateTime(GameManager.instance.timeRemaining);
-}
-    
+    public GameObject panelWin;
+    public GameObject panelGameOver;
+
+    void Start()
+    {
+        UpdateScore(0);
+        UpdateTime(GameManager.instance.timeRemaining);
+    }
 
     public void UpdateScore(int score)
     {
@@ -22,6 +24,16 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTime(float time)
     {
-        txt_Time.text = "Time: " + time.ToString("F2");
+        txt_Time.text = "Time: " + Mathf.CeilToInt(time).ToString();
+    }
+
+    public void MostrarPantallaWin()
+    {
+        panelWin.SetActive(true);
+    }
+
+    public void MostrarPantallaGameOver()
+    {
+        panelGameOver.SetActive(true);
     }
 }

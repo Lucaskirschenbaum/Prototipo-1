@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,11 +18,17 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         uiManager = FindObjectOfType<UIManager>();
+        Time.timeScale = 1;
     }
 
     void Update()
     {
-        if (gameOver) return;
+        if (gameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
+        }
 
         timeRemaining -= Time.deltaTime;
         uiManager.UpdateTime(timeRemaining);
@@ -30,7 +37,8 @@ public class GameManager : MonoBehaviour
         {
             timeRemaining = 0;
             gameOver = true;
-            Debug.Log("Loss");
+            uiManager.MostrarPantallaGameOver();
+            Time.timeScale = 0;
         }
     }
 
@@ -44,7 +52,8 @@ public class GameManager : MonoBehaviour
         if (score >= maxScore)
         {
             gameOver = true;
-            Debug.Log("Win");
+            uiManager.MostrarPantallaWin();
+            Time.timeScale = 0;
         }
     }
 }
